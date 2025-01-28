@@ -1,4 +1,4 @@
-Writeup in Writeup.pdf
+Writeup and ERD in Writeup.pdf
 
 Bot in app.py
 
