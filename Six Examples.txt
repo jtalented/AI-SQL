@@ -1,0 +1,77 @@
+1)Worked
+"What dishes are available on the Dinner Menu?"
+
+
+SELECT Dishes.DishName 
+FROM Dishes
+JOIN Menus ON Dishes.MenuID = Menus.MenuID
+WHERE Menus.MenuName = 'Dinner Menu';
+
+
+DishName
+---------------
+Grilled Salmon
+Steak Frites
+
+
+2) Did not work
+"Show me all dishes ordered by Charlie Brown?"
+
+SELECT Dishes.DishName 
+FROM Dishes
+JOIN OrderItems ON Dishes.DishID = OrderItems.DishID
+JOIN Orders ON OrderItems.OrderID = Orders.OrderID
+JOIN Customers ON Orders.CustomerID = Customers.CustomerID
+WHERE Customers.CustomerName = 'Charlie Brown';
+
+There is no such column: Customers.CustomerName
+
+3) Did not work (I asked for a non existant column)
+"What are the prices of all dishes that are gluten-free?"
+
+SELECT DishName, Price FROM Dishes WHERE GlutenFree = true;
+
+There is no such column: Dishes.GlutenFree
+
+4) Did not work
+"Show me the total amount for each customer’s order on January 1, 2023."
+
+SELECT Customers.Name, SUM(Orders.Total_Amount) 
+FROM Orders
+JOIN Customers ON Orders.CustomerID = Customers.CustomerID
+WHERE Orders.OrderDate = '2023-01-01'
+GROUP BY Customers.Name;
+
+
+There is no such column: Orders.Total_Amount
+
+5) Worked
+"Which customers have ordered the 'Sushi Platter'?"
+
+SELECT Customers.Name 
+FROM Customers
+JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+JOIN OrderItems ON Orders.OrderID = OrderItems.OrderID
+JOIN Dishes ON OrderItems.DishID = Dishes.DishID
+WHERE Dishes.DishName = 'Sushi Platter';
+
+
+Name
+---------
+Charlie Brown
+
+
+6) Worked
+
+SELECT Dishes.DishName, Orders.OrderID 
+FROM Dishes
+JOIN OrderItems ON Dishes.DishID = OrderItems.DishID
+JOIN Orders ON OrderItems.OrderID = Orders.OrderID;
+
+
+DishName          | OrderID
+-----------------------------
+Pasta Carbonara   | 1
+Caprese Salad     | 1
+Steak Frites      | 1
+Grilled Salmon    | 2
